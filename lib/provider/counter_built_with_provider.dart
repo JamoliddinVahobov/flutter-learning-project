@@ -20,15 +20,9 @@ class CounterAppWithProvider extends StatelessWidget {
   }
 }
 
-class CounterBuiltWithProvider extends StatefulWidget {
+class CounterBuiltWithProvider extends StatelessWidget {
   const CounterBuiltWithProvider({super.key});
 
-  @override
-  State<CounterBuiltWithProvider> createState() =>
-      _CounterBuiltWithProviderState();
-}
-
-class _CounterBuiltWithProviderState extends State<CounterBuiltWithProvider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
