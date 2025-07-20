@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:kingofcomfort/product_api/models/product_model.dart';
 
 class ProductService {
-  final String apiUrl = 'https://dash.vips.uz/api/18/167/4460';
+  final String apiUrl = '';
 
   Future<List<Product>> fetchProducts() async {
     final response = await http.get(Uri.parse(apiUrl));
