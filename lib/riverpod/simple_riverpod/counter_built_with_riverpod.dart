@@ -1,45 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:kingofcomfort/provider/counter_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kingofcomfort/riverpod/simple_riverpod/counter_riverpod_state.dart';
 
 void main() {
-  runApp(const CounterAppWithProvider());
+  runApp(
+    const ProviderScope(
+      child: CounterAppWithRiverpod(),
+    ),
+  );
 }
 
-class CounterAppWithProvider extends StatelessWidget {
-  const CounterAppWithProvider({super.key});
+class CounterAppWithRiverpod extends StatelessWidget {
+  const CounterAppWithRiverpod({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CounterProvider(),
-      child: const MaterialApp(
-        home: CounterBuiltWithProvider(),
-      ),
+    return const MaterialApp(
+      home: CounterAppBuiltWithRiverpod(),
     );
   }
 }
 
-class CounterBuiltWithProvider extends StatelessWidget {
-  const CounterBuiltWithProvider({super.key});
+class CounterAppBuiltWithRiverpod extends ConsumerWidget {
+  const CounterAppBuiltWithRiverpod({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Counter with Provider'),
+        title: const Text('Counter with Riverpod'),
         backgroundColor: Colors.greenAccent,
       ),
       body: Center(
-        child: Consumer<CounterProvider>(
-          builder: (context, provider, child) {
-            return Text(
-              provider.count.toString(),
-              style: const TextStyle(fontSize: 30),
-            );
-          },
-        ),
-      ),
+          child: Text(
+        ref.watch(counterRiverpodState).toString(),
+        style: const TextStyle(fontSize: 30),
+      )),
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 12, 20),
         child: Column(
@@ -49,7 +45,7 @@ class CounterBuiltWithProvider extends StatelessWidget {
             FloatingActionButton(
               backgroundColor: Colors.greenAccent,
               shape: const CircleBorder(),
-              onPressed: () => context.read<CounterProvider>().increment(),
+              onPressed: () => ref.read(counterRiverpodState.notifier).state++,
               heroTag: 'fab1',
               child: const Icon(Icons.add),
             ),
@@ -57,7 +53,7 @@ class CounterBuiltWithProvider extends StatelessWidget {
             FloatingActionButton(
               backgroundColor: Colors.greenAccent,
               shape: const CircleBorder(),
-              onPressed: () => context.read<CounterProvider>().decrement(),
+              onPressed: () => ref.read(counterRiverpodState.notifier).state--,
               heroTag: 'fab2',
               child: const Icon(Icons.remove),
             ),
