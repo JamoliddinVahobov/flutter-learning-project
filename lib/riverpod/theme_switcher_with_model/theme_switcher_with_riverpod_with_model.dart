@@ -30,25 +30,17 @@ class ThemeSwitcherWithRiverpodWithModel extends ConsumerWidget {
             spacing: 10,
             children: [
               ElevatedButton.icon(
-                onPressed: () {
-                  ref.read(themeRiverpodWithModel).changeTheme(ThemeMode.light);
-                },
+                onPressed: () => switchToLightWithModel(ref),
                 label: const Text('Light'),
                 icon: const Icon(Icons.sunny),
               ),
               ElevatedButton.icon(
-                onPressed: () {
-                  ref.read(themeRiverpodWithModel).changeTheme(ThemeMode.dark);
-                },
+                onPressed: () => switchToDarkWithModel(ref),
                 label: const Text('Dark'),
                 icon: const Icon(Icons.dark_mode),
               ),
               ElevatedButton.icon(
-                onPressed: () {
-                  ref
-                      .read(themeRiverpodWithModel)
-                      .changeTheme(ThemeMode.system);
-                },
+                onPressed: () => switchToSystemWithModel(ref),
                 label: const Text('System'),
                 icon: const Icon(Icons.system_security_update),
               ),
