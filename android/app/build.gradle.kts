@@ -1,3 +1,5 @@
+import java.io.File
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -5,10 +7,22 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// Function to get the latest NDK version
+fun getLatestNDKVersion(): String {
+    val ndkDir = File(android.sdkDirectory, "ndk")
+    val versions = ndkDir.listFiles()
+    ?.filter { it.isDirectory }
+    ?.map { it.name }
+    ?.sorted()
+
+    return versions?.lastOrNull()
+    ?: throw GradleException("No NDK version found in ${ndkDir.absolutePath}")
+}
+
 android {
     namespace = "com.example.kingofcomfort"
-    compileSdk = 35
-    ndkVersion = "28.0.12433566"
+    compileSdk = 36
+    ndkVersion = getLatestNDKVersion()
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -25,7 +39,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = 35
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
